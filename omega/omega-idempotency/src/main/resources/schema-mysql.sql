@@ -14,9 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package org.apache.servicecomb.saga.omega.transaction;
-
-public interface MessageDeserializer {
-  Object[] deserialize(byte[] message);
-}
+CREATE TABLE IF NOT EXISTS TxIdempotency (
+-- 主键ID
+  surrogateId bigint NOT NULL AUTO_INCREMENT,
+-- 微服务名称
+  serviceName varchar(36) NOT NULL,
+-- 微服务实例ID
+  instanceId varchar(36) NOT NULL,
+-- 创建时间
+  createdAt datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+-- 更新时间
+  updatedAt datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+-- 全局事务ID
+  globalTxId varchar(36) NOT NULL,
+-- 本地事务ID
+  localTxId varchar(36) NOT NULL,
+-- 父事务ID
+  parentTxId varchar(36) DEFAULT NULL,
+-- 状态
+  state varchar(50) NOT NULL,
+-- 过期时间
+  expiryTime datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (surrogateId)
+) DEFAULT CHARSET=utf8;

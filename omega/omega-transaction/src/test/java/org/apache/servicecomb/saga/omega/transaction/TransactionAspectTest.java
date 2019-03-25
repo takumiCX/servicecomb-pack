@@ -30,6 +30,7 @@ import java.util.UUID;
 import org.apache.servicecomb.saga.common.EventType;
 import org.apache.servicecomb.saga.omega.context.IdGenerator;
 import org.apache.servicecomb.saga.omega.context.OmegaContext;
+import org.apache.servicecomb.saga.omega.idempotency.IdempotencyManager;
 import org.apache.servicecomb.saga.omega.transaction.annotations.Compensable;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -74,7 +75,8 @@ public class TransactionAspectTest {
   private final Compensable compensable = mock(Compensable.class);
 
   private final OmegaContext omegaContext = new OmegaContext(idGenerator);
-  private final TransactionAspect aspect = new TransactionAspect(sender, omegaContext);
+  private IdempotencyManager idempotencyManager;
+  private final TransactionAspect aspect = new TransactionAspect(sender, omegaContext, idempotencyManager);
 
   @Before
   public void setUp() throws Exception {

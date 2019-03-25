@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.apache.servicecomb.saga.common.EventType;
 import org.apache.servicecomb.saga.omega.context.CallbackContext;
+import org.apache.servicecomb.saga.omega.idempotency.IdempotencyManager;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -70,7 +71,9 @@ public class CompensationMessageHandlerTest {
 
   private final CallbackContext context = mock(CallbackContext.class);
 
-  private final CompensationMessageHandler handler = new CompensationMessageHandler(sender, context);
+  private final IdempotencyManager idempotencyManager=mock(IdempotencyManager.class);
+
+  private final CompensationMessageHandler handler = new CompensationMessageHandler(sender, context,idempotencyManager);
 
   @Before
   public void setUp() {

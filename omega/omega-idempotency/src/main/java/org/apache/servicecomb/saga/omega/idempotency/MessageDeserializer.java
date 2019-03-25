@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-package org.apache.servicecomb.saga.omega.transaction;
+package org.apache.servicecomb.saga.omega.idempotency;
 
-public interface MessageSerializer {
-  byte[] serialize(Object[] objects);
+public interface MessageDeserializer {
+  Object[] deserialize(byte[] message);
 }

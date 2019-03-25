@@ -19,6 +19,7 @@ package org.apache.servicecomb.saga.omega.transaction.spring;
 
 import org.apache.servicecomb.saga.omega.context.CallbackContext;
 import org.apache.servicecomb.saga.omega.context.OmegaContext;
+import org.apache.servicecomb.saga.omega.idempotency.IdempotencyManager;
 import org.apache.servicecomb.saga.omega.transaction.CompensationMessageHandler;
 import org.apache.servicecomb.saga.omega.transaction.MessageHandler;
 import org.apache.servicecomb.saga.omega.transaction.SagaMessageSender;
@@ -41,8 +42,11 @@ public class TransactionAspectConfig {
 
   @Bean
   MessageHandler messageHandler(SagaMessageSender sender,
-      @Qualifier("compensationContext") CallbackContext context, OmegaContext omegaContext) {
-    return new CompensationMessageHandler(sender, context);
+      @Qualifier("compensationContext") CallbackContext context,
+                                OmegaContext omegaContext,
+                                IdempotencyManager idempotencyManager) {
+
+    return new CompensationMessageHandler(sender, context,idempotencyManager);
   }
 
   @Bean
@@ -51,8 +55,8 @@ public class TransactionAspectConfig {
   }
 
   @Bean
-  TransactionAspect transactionAspect(SagaMessageSender sender, OmegaContext context) {
-    return new TransactionAspect(sender, context);
+  TransactionAspect transactionAspect(SagaMessageSender sender, OmegaContext context,IdempotencyManager idempotencyManager) {
+    return new TransactionAspect(sender, context,idempotencyManager);
   }
 
   @Bean

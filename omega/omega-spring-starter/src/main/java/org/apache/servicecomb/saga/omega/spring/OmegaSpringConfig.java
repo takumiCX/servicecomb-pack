@@ -32,6 +32,8 @@ import org.apache.servicecomb.saga.omega.context.ServiceConfig;
 import org.apache.servicecomb.saga.omega.context.UniqueIdGenerator;
 import org.apache.servicecomb.saga.omega.format.KryoMessageFormat;
 import org.apache.servicecomb.saga.omega.format.MessageFormat;
+import org.apache.servicecomb.saga.omega.idempotency.IdempotencyManager;
+import org.apache.servicecomb.saga.omega.idempotency.TxIdempotencyRepository;
 import org.apache.servicecomb.saga.omega.transaction.MessageHandler;
 import org.apache.servicecomb.saga.omega.transaction.SagaMessageSender;
 import org.apache.servicecomb.saga.omega.transaction.tcc.DefaultParametersContext;
@@ -40,10 +42,13 @@ import org.apache.servicecomb.saga.omega.transaction.tcc.TccMessageHandler;
 import org.apache.servicecomb.saga.omega.transaction.tcc.TccMessageSender;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 
+//fixme
+@EntityScan(basePackages = "org.apache.servicecomb.saga.omega")
 @Configuration
 class OmegaSpringConfig {
 
@@ -70,6 +75,13 @@ class OmegaSpringConfig {
   @Bean
   ServiceConfig serviceConfig(@Value("${spring.application.name}") String serviceName) {
     return new ServiceConfig(serviceName);
+  }
+
+  @Bean
+  //fixme
+  IdempotencyManager idempotencyManager(ServiceConfig serviceConfig, TxIdempotencyRepository txIdempotencyRepository){
+    MessageFormat messageFormat = new KryoMessageFormat();
+    return new IdempotencyManager(txIdempotencyRepository, serviceConfig,messageFormat,messageFormat);
   }
 
   @Bean

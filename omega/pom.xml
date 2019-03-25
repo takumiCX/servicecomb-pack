@@ -17,77 +17,78 @@
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <parent>
-    <artifactId>saga</artifactId>
-    <groupId>org.apache.servicecomb.saga</groupId>
-    <version>0.3.0-SNAPSHOT</version>
-  </parent>
-  <modelVersion>4.0.0</modelVersion>
-
-  <artifactId>omega</artifactId>
-  <name>Saga::Omega</name>
-
-  <packaging>pom</packaging>
-  <modules>
-    <module>omega-transaction</module>
-    <module>omega-context</module>
-    <module>omega-spring-tx</module>
-    <module>omega-transport</module>
-    <module>omega-connector</module>
-    <module>omega-spring-starter</module>
-    <module>omega-format</module>
-  </modules>
-
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-test</artifactId>
-        <version>${spring.boot.version}</version>
-        <exclusions>
-          <exclusion>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-          </exclusion>
-        </exclusions>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <version>${spring.boot.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>saga</artifactId>
         <groupId>org.apache.servicecomb.saga</groupId>
-        <artifactId>omega-context</artifactId>
         <version>0.3.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.servicecomb.saga</groupId>
-        <artifactId>omega-transaction</artifactId>
-        <version>0.3.0-SNAPSHOT</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-  <build>
-    <plugins>
-      <!-- SCB-648 Just make sure the Omega is 1.7 compatible -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
-        <configuration>
-          <encoding>UTF-8</encoding>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+    <artifactId>omega</artifactId>
+    <name>Saga::Omega</name>
+
+    <packaging>pom</packaging>
+    <modules>
+        <module>omega-transaction</module>
+        <module>omega-context</module>
+        <module>omega-spring-tx</module>
+        <module>omega-transport</module>
+        <module>omega-connector</module>
+        <module>omega-spring-starter</module>
+        <module>omega-format</module>
+        <module>omega-idempotency</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring.boot.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.json</groupId>
+                        <artifactId>json</artifactId>
+                    </exclusion>
+                </exclusions>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.servicecomb.saga</groupId>
+                <artifactId>omega-context</artifactId>
+                <version>0.3.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.servicecomb.saga</groupId>
+                <artifactId>omega-transaction</artifactId>
+                <version>0.3.0-SNAPSHOT</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <!-- SCB-648 Just make sure the Omega is 1.7 compatible -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

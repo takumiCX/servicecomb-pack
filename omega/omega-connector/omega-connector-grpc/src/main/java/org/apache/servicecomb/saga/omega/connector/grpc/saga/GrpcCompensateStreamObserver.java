@@ -21,7 +21,7 @@ import java.lang.invoke.MethodHandles;
 
 import org.apache.servicecomb.saga.omega.connector.grpc.core.LoadBalanceContext;
 import org.apache.servicecomb.saga.omega.connector.grpc.core.ReconnectStreamObserver;
-import org.apache.servicecomb.saga.omega.transaction.MessageDeserializer;
+import org.apache.servicecomb.saga.omega.idempotency.MessageDeserializer;
 import org.apache.servicecomb.saga.omega.transaction.MessageHandler;
 import org.apache.servicecomb.saga.omega.transaction.MessageSender;
 import org.apache.servicecomb.saga.pack.contract.grpc.GrpcCompensateCommand;

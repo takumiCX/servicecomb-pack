@@ -18,21 +18,28 @@
 package org.apache.servicecomb.saga.omega.transaction;
 
 import org.apache.servicecomb.saga.omega.context.CallbackContext;
+import org.apache.servicecomb.saga.omega.idempotency.IdempotencyManager;
 
 public class CompensationMessageHandler implements MessageHandler {
-  private final SagaMessageSender sender;
 
-  private final CallbackContext context;
+    private final SagaMessageSender sender;
 
-  public CompensationMessageHandler(SagaMessageSender sender, CallbackContext context) {
-    this.sender = sender;
-    this.context = context;
-  }
+    private final CallbackContext context;
 
-  @Override
-  public void onReceive(String globalTxId, String localTxId, String parentTxId, String compensationMethod,
-      Object... payloads) {
-    context.apply(globalTxId, localTxId, compensationMethod, payloads);
-    sender.send(new TxCompensatedEvent(globalTxId, localTxId, parentTxId, compensationMethod));
-  }
+    private final IdempotencyManager idempotencyManager;
+
+
+    public CompensationMessageHandler(SagaMessageSender sender, CallbackContext context,IdempotencyManager idempotencyManager) {
+        this.sender = sender;
+        this.context = context;
+        this.idempotencyManager=idempotencyManager;
+    }
+
+    @Override
+    public void onReceive(String globalTxId, String localTxId, String parentTxId, String compensationMethod,
+                          Object... payloads) {
+        idempotencyManager.startCompensate(globalTxId,parentTxId,compensationMethod,payloads,context);
+        //发送事务补偿消息
+        sender.send(new TxCompensatedEvent(globalTxId, localTxId, parentTxId, compensationMethod));
+    }
 }

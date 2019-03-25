@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-package org.apache.servicecomb.saga.omega.format;
+package org.apache.servicecomb.saga.omega.idempotency;
 
-import org.apache.servicecomb.saga.omega.idempotency.MessageDeserializer;
-import org.apache.servicecomb.saga.omega.idempotency.MessageSerializer;
-
-public interface MessageFormat extends MessageSerializer, MessageDeserializer {
+public interface MessageSerializer {
+  byte[] serialize(Object[] objects);
 }
